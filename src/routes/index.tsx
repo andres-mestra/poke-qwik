@@ -1,8 +1,16 @@
-import { component$, useSignal } from '@builder.io/qwik'
+import { $, component$, useSignal } from '@builder.io/qwik'
 import type { DocumentHead } from '@builder.io/qwik-city'
+
+const POKEMON_GRADIENT = 1
 
 export default component$(() => {
   const pokemonId = useSignal<number>(1) // Primitivos
+
+  const changePokemonId = $((value: number) => {
+    const newId = pokemonId.value + value
+    if (newId <= 0) return
+    pokemonId.value = newId
+  })
 
   return (
     <>
@@ -20,10 +28,16 @@ export default component$(() => {
       </figure>
 
       <div class="mt-2">
-        <button onClick$={() => pokemonId.value--} class="btn btn-primary mr-3">
+        <button
+          onClick$={() => changePokemonId(-POKEMON_GRADIENT)}
+          class="btn btn-primary mr-3"
+        >
           Anterior
         </button>
-        <button onClick$={() => pokemonId.value++} class="btn btn-primary">
+        <button
+          onClick$={() => changePokemonId(POKEMON_GRADIENT)}
+          class="btn btn-primary"
+        >
           Siguientes
         </button>
       </div>
