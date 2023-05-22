@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik'
+import { component$, useSignal, useTask$ } from '@builder.io/qwik'
 
 interface Props {
   id: number
@@ -11,18 +11,34 @@ const POKEMON_IMG_BASE =
 
 export const PokemonImage = component$(
   ({ id, size = 200, backImage = false }: Props) => {
+    const imageLoaded = useSignal(false)
+
     const imgPath = backImage ? `/back/${id}.png` : `/${id}.png`
     const imgSize = `${size}px`
 
+    useTask$(({ track }) => {
+      track(() => id)
+      track(() => backImage)
+
+      imageLoaded.value = false
+    })
+
     return (
-      <figure>
-        <img
-          src={`${POKEMON_IMG_BASE}${imgPath}`}
-          alt="Pokemon Sprite"
-          height={imgSize}
-          width={imgSize}
-        />
-      </figure>
+      <div
+        class="flex flex-col items-center justify-center"
+        style={{ height: imgSize }}
+      >
+        {!imageLoaded.value && <span>Cargando...</span>}
+        <figure>
+          <img
+            alt="Pokemon Sprite"
+            style={{ height: imgSize, with: imgSize }}
+            src={`${POKEMON_IMG_BASE}${imgPath}`}
+            class={{ hidden: !imageLoaded.value }}
+            onLoad$={() => (imageLoaded.value = true)}
+          />
+        </figure>
+      </div>
     )
   }
 )
