@@ -53,6 +53,14 @@ body {
   @apply bg-purple-700;
 }
 
+.btn-primary-outlined {
+  @apply border-solid border-2 border-purple-600 text-purple-600;
+}
+
+.btn-primary-outlined:hover {
+  @apply bg-purple-100;
+}
+
 button:disabled {
   @apply bg-gray-400;
 }

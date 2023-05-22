@@ -17,7 +17,7 @@ export default component$(() => {
   return (
     <>
       <h1 class="text-7xl">Poke Qwik</h1>
-      <span class="text-2xl">Buscador simple</span>
+      <span class="text-2xl">¿Quién es ese pokémon?</span>
       <span class="text-9xl">{pokemonId}</span>
 
       <PokemonImage id={pokemonId.value} backImage={showBackImage.value} />
@@ -35,6 +35,8 @@ export default component$(() => {
         >
           Siguientes
         </button>
+      </div>
+      <div class="flex gap-3 mt-2">
         <button
           class="btn btn-primary"
           onClick$={() => (showBackImage.value = !showBackImage.value)}
