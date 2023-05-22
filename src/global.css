@@ -23,7 +23,7 @@
  */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
@@ -39,4 +39,20 @@ html {
 body {
   padding: 0;
   line-height: inherit;
+}
+
+.btn {
+  @apply font-bold py-2 px-4 rounded;
+}
+
+.btn-primary {
+  @apply bg-purple-600 text-white;
+}
+
+.btn-primary:hover {
+  @apply bg-purple-700;
+}
+
+button:disabled {
+  @apply bg-gray-400;
 }
