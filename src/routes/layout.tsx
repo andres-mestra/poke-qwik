@@ -1,5 +1,9 @@
-import { component$, Slot } from '@builder.io/qwik';
+import { component$, Slot } from '@builder.io/qwik'
 
 export default component$(() => {
-  return <Slot />;
-});
+  return (
+    <main class="flex flex-col items-center justify-center">
+      <Slot />
+    </main>
+  )
+})
