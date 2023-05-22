@@ -21,7 +21,7 @@ export default component$(() => {
 
   return (
     <>
-      <p class="text-4xl">Pokemon: {pokemonId}</p>
+      <p class="text-4xl">Pokemon: {pokemonId.value}</p>
       <PokemonImage isVisibleInit id={pokemonId.value} />
     </>
   )
