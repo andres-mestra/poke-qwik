@@ -1,8 +1,8 @@
 import { $, component$, useSignal } from '@builder.io/qwik'
-import type { DocumentHead } from '@builder.io/qwik-city'
+import { type DocumentHead } from '@builder.io/qwik-city'
 import { PokemonImage } from '~/components/pokemons/pokemon-image'
 
-const POKEMON_GRADIENT = 1
+import { POKEMON_GRADIENT, POKEMON_ID_MIN } from '~/constants'
 
 export default component$(() => {
   const pokemonId = useSignal(1) // Primitivos
@@ -10,7 +10,7 @@ export default component$(() => {
 
   const changePokemonId = $((value: number) => {
     const newId = pokemonId.value + value
-    if (newId <= 0) return
+    if (newId < POKEMON_ID_MIN) return
     pokemonId.value = newId
   })
 
@@ -20,7 +20,11 @@ export default component$(() => {
       <span class="text-2xl">¿Quién es ese pokémon?</span>
       <span class="text-9xl">{pokemonId}</span>
 
-      <PokemonImage id={pokemonId.value} backImage={showBackImage.value} />
+      <PokemonImage
+        id={pokemonId.value}
+        backImage={showBackImage.value}
+        showControlHidde
+      />
 
       <div class="flex gap-3 mt-2">
         <button
