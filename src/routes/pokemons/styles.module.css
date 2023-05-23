@@ -1,0 +1,17 @@
+.pokemons__page {
+  @apply flex flex-col items-center gap-7;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.pokemons__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 0.75rem;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+.pokemons__card {
+  @apply flex flex-col justify-center items-center p-2 bg-slate-100 rounded-lg  shadow-md shadow-indigo-500/50;
+}

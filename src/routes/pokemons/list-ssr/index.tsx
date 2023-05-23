@@ -10,6 +10,8 @@ import { PokemonImage } from '~/components/pokemons/pokemon-image'
 import { getPokemonsSmall } from '~/helpers/get-pokemos-small'
 import { OFFSET_MIN, OFFSET_PAD } from '~/constants'
 
+import styles from '../styles.module.css'
+
 export const usePokemonList = routeLoader$<PokemonSmall[]>(
   async ({ query, pathname, redirect }) => {
     const offset = Number(query.get('offset') || OFFSET_MIN)
@@ -34,7 +36,7 @@ export default component$(() => {
   })
 
   return (
-    <article class="flex flex-col items-center gap-7">
+    <article class={styles.pokemons__page}>
       <section class="flex flex-col items-center">
         <span class="text-5xl">Status</span>
         <span>Página actual: {curretOffset.value}</span>
@@ -54,12 +56,9 @@ export default component$(() => {
           Siguientes
         </Link>
       </div>
-      <section class="grid grid-cols-6 gap-3">
+      <section class={styles.pokemons__grid}>
         {pokemons.value.map((pokemon) => (
-          <div
-            key={pokemon.name}
-            class="flex flex-col justify-center items-center p-2 bg-slate-100 rounded-lg  shadow-md shadow-indigo-500/50"
-          >
+          <div key={pokemon.name} class={styles.pokemons__card}>
             <PokemonImage id={pokemon.id} isVisibleInit={true} />
             <span class="capitalize font-semibold text-indigo-500">
               {pokemon.name}
