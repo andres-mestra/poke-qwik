@@ -1,4 +1,4 @@
-import type { PokemonListResponse, PokemonSmall } from '~/components/interfaces'
+import type { PokemonListResponse, PokemonSmall } from '~/interfaces'
 import { LIMIT_DEFAULT, OFFSET_MIN } from '~/constants'
 
 export async function getPokemonsSmall(

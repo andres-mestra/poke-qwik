@@ -1,6 +1,6 @@
 import { component$, useStore } from '@builder.io/qwik'
 import type { DocumentHead } from '@builder.io/qwik-city'
-import type { PokemonSmall } from '~/components/interfaces'
+import type { PokemonSmall } from '~/interfaces'
 
 interface PokemonPageState {
   currentPage: number

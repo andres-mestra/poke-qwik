@@ -5,7 +5,7 @@ import {
   routeLoader$,
   useLocation,
 } from '@builder.io/qwik-city'
-import type { PokemonSmall } from '~/components/interfaces'
+import type { PokemonSmall } from '~/interfaces'
 import { PokemonImage } from '~/components/pokemons/pokemon-image'
 import { getPokemonsSmall } from '~/helpers/get-pokemos-small'
 import { OFFSET_MIN, OFFSET_PAD } from '~/constants'
