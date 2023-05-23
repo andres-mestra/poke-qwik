@@ -1,4 +1,4 @@
-import { component$, useSignal, useTask$ } from '@builder.io/qwik'
+import { component$, useComputed$, useSignal, useTask$ } from '@builder.io/qwik'
 import { Link } from '@builder.io/qwik-city'
 
 interface Props {
@@ -23,9 +23,6 @@ export const PokemonImage = component$(
     const imageLoaded = useSignal(false)
     const isVisible = useSignal(isVisibleInit)
 
-    const imgPath = backImage ? `/back/${id}.png` : `/${id}.png`
-    const imgSize = `${size}px`
-
     useTask$(({ track }) => {
       track(() => id)
       isVisible.value = isVisibleInit
@@ -37,17 +34,23 @@ export const PokemonImage = component$(
       imageLoaded.value = false
     })
 
+    const imgSize = useComputed$(() => `${size}px`)
+
+    const imgPath = useComputed$(() =>
+      backImage ? `/back/${id}.png` : `/${id}.png`
+    )
+
     return (
       <div class="flex flex-col items-center justify-center">
         {!imageLoaded.value && (
-          <span style={{ height: imgSize }}>Cargando...</span>
+          <span style={{ height: imgSize.value }}>Cargando...</span>
         )}
         <Link href={`/pokemon/${id}`}>
           <figure>
             <img
               alt="Pokemon Sprite"
-              style={{ height: imgSize, with: imgSize }}
-              src={`${POKEMON_IMG_BASE}${imgPath}`}
+              style={{ height: imgSize.value, with: imgSize.value }}
+              src={`${POKEMON_IMG_BASE}${imgPath.value}`}
               class={[
                 {
                   hidden: !imageLoaded.value,
