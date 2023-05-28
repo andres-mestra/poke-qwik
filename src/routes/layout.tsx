@@ -2,8 +2,11 @@ import { component$, Slot } from '@builder.io/qwik'
 import { Link } from '@builder.io/qwik-city'
 import { Logo } from '~/components/shared/logo/logon'
 import { NavBar } from '~/components/shared/nav-bar/nav-bar'
+import { usePokemonGameProvider } from '~/context/pokemon/pokemon-game.context'
 
 export default component$(() => {
+  usePokemonGameProvider()
+
   return (
     <>
       <header class="flex items-center justify-around">
