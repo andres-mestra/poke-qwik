@@ -1,15 +1,13 @@
 import { component$, Slot } from '@builder.io/qwik'
 import { Link } from '@builder.io/qwik-city'
+
+import { PokemonProvider } from '~/context'
 import { Logo } from '~/components/shared/logo/logon'
 import { NavBar } from '~/components/shared/nav-bar/nav-bar'
-import { usePokemonGameProvider, usePokemonListProvider } from '~/context'
 
 export default component$(() => {
-  usePokemonGameProvider()
-  usePokemonListProvider()
-
   return (
-    <>
+    <PokemonProvider>
       <header class="flex items-center justify-around">
         <Link href="/">
           <Logo height={100} width={100} />
@@ -19,6 +17,6 @@ export default component$(() => {
       <main class="flex flex-col items-center justify-center">
         <Slot />
       </main>
-    </>
+    </PokemonProvider>
   )
 })
