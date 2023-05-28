@@ -91,7 +91,7 @@ export default component$(() => {
       <section class={styles.pokemons__grid}>
         {pokemonState.pokemons.map((pokemon) => (
           <div key={pokemon.name} class={styles.pokemons__card}>
-            <PokemonImage id={pokemon.id} isVisibleInit={true} />
+            <PokemonImage id={pokemon.id} isVisible />
             <span class="capitalize font-semibold text-indigo-500">
               {pokemon.name}
             </span>
