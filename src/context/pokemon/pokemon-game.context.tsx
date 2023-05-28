@@ -18,4 +18,6 @@ export const usePokemonGameProvider = () => {
   })
 
   useContextProvider(PokemonGameContext, pokemonGame)
+
+  return pokemonGame
 }
