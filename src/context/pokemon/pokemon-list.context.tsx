@@ -2,8 +2,9 @@ import { createContextId, useContextProvider, useStore } from '@builder.io/qwik'
 import { type PokemonSmall } from '~/interfaces'
 
 export interface PokemonListState {
+  loading: boolean
+  isLast: boolean
   currentPage: number
-  isLoading: boolean
   pokemons: PokemonSmall[]
 }
 
@@ -13,8 +14,9 @@ export const PokemonListContext = createContextId<PokemonListState>(
 
 export const usePokemonListProvider = () => {
   const pokemonState = useStore<PokemonListState>({
-    currentPage: 1,
-    isLoading: false,
+    isLast: false,
+    loading: false,
+    currentPage: 0,
     pokemons: [],
   })
 
