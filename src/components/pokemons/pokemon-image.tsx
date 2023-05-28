@@ -5,27 +5,18 @@ interface Props {
   id: number | string
   size?: number
   backImage?: boolean
-  isVisibleInit?: boolean
-  showControlHidde?: boolean
+  isVisible?: boolean
 }
 
 const POKEMON_IMG_BASE =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon'
 
 export const PokemonImage = component$(
-  ({
-    id,
-    size = 200,
-    backImage = false,
-    isVisibleInit = false,
-    showControlHidde = false,
-  }: Props) => {
+  ({ id, size = 200, backImage = false, isVisible = true }: Props) => {
     const imageLoaded = useSignal(false)
-    const isVisible = useSignal(isVisibleInit)
 
     useTask$(({ track }) => {
       track(() => id)
-      isVisible.value = isVisibleInit
       imageLoaded.value = false
     })
 
@@ -54,7 +45,7 @@ export const PokemonImage = component$(
               class={[
                 {
                   hidden: !imageLoaded.value,
-                  'brightness-0': !isVisible.value,
+                  'brightness-0': !isVisible,
                 },
                 'transition-all',
               ]}
@@ -62,14 +53,6 @@ export const PokemonImage = component$(
             />
           </figure>
         </Link>
-        {showControlHidde && (
-          <button
-            class="btn btn-primary-outlined"
-            onClick$={() => (isVisible.value = !isVisible.value)}
-          >
-            {isVisible.value ? 'Ocultar' : 'Revelar'}
-          </button>
-        )}
       </div>
     )
   }
