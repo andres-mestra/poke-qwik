@@ -1,34 +1,16 @@
-import {
-  $,
-  component$,
-  useStore,
-  useTask$,
-  useOnDocument,
-} from '@builder.io/qwik'
+import { $, component$, useTask$, useOnDocument } from '@builder.io/qwik'
 import type { DocumentHead } from '@builder.io/qwik-city'
 import { PokemonImage } from '~/components/pokemons/pokemon-image'
+
+import { usePokemonListContext } from '~/hooks/usePokemonListContext'
 import { getPokemonsSmall } from '~/helpers/get-pokemos-small'
 import { OFFSET_PAD } from '~/constants'
-import type { PokemonSmall } from '~/interfaces'
 
 import styles from '../styles.module.css'
 
-interface PokemonPageState {
-  loading: boolean
-  isLast: boolean
-  currentPage: number
-  pokemons: PokemonSmall[]
-}
-
-const LIMIT = 30
 const SCROLL_SPACE_ON = 200
 export default component$(() => {
-  const pokemonState = useStore<PokemonPageState>({
-    loading: false,
-    isLast: false,
-    currentPage: 0,
-    pokemons: [],
-  })
+  const pokemonState = usePokemonListContext()
 
   /*
   //Solo el client
@@ -48,7 +30,7 @@ export default component$(() => {
 
     const pokemons = await getPokemonsSmall(
       pokemonState.currentPage * OFFSET_PAD,
-      LIMIT
+      OFFSET_PAD
     )
 
     pokemonState.pokemons = [...pokemonState.pokemons, ...pokemons]
@@ -61,12 +43,9 @@ export default component$(() => {
     $(() => {
       const maxScroll = document.body.scrollHeight
       const currentScroll = window.scrollY + window.innerHeight
+      const activeScroll = currentScroll + SCROLL_SPACE_ON >= maxScroll
 
-      if (
-        currentScroll + SCROLL_SPACE_ON >= maxScroll &&
-        !pokemonState.loading &&
-        !pokemonState.isLast
-      ) {
+      if (activeScroll && !pokemonState.loading && !pokemonState.isLast) {
         pokemonState.loading = true
         pokemonState.currentPage++
       }
