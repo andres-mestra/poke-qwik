@@ -1,5 +1,5 @@
 import { $, component$, useTask$, useOnDocument } from '@builder.io/qwik'
-import type { DocumentHead } from '@builder.io/qwik-city'
+import { Link, type DocumentHead } from '@builder.io/qwik-city'
 import { PokemonImage } from '~/components/pokemons/pokemon-image'
 
 import { usePokemonListContext } from '~/hooks/usePokemonListContext'
@@ -69,12 +69,14 @@ export default component$(() => {
       </div>
       <section class={styles.pokemons__grid}>
         {pokemonState.pokemons.map((pokemon) => (
-          <div key={pokemon.name} class={styles.pokemons__card}>
-            <PokemonImage id={pokemon.id} isVisible />
-            <span class="capitalize font-semibold text-indigo-500">
-              {pokemon.name}
-            </span>
-          </div>
+          <Link key={pokemon.name} href={`/pokemon/${pokemon.id}`}>
+            <div class={styles.pokemons__card}>
+              <PokemonImage id={pokemon.id} isVisible />
+              <span class="capitalize font-semibold text-indigo-500">
+                {pokemon.name}
+              </span>
+            </div>
+          </Link>
         ))}
       </section>
     </article>

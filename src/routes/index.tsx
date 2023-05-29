@@ -1,5 +1,5 @@
 import { component$ } from '@builder.io/qwik'
-import { type DocumentHead } from '@builder.io/qwik-city'
+import { Link, type DocumentHead } from '@builder.io/qwik-city'
 import { PokemonImage } from '~/components/pokemons/pokemon-image'
 import { usePokemonGame } from '~/hooks/use-pokemon-game'
 
@@ -20,11 +20,13 @@ export default component$(() => {
       <span class="text-2xl">¿Quién es ese pokémon?</span>
       <span class="text-9xl">{pokemonId.value}</span>
 
-      <PokemonImage
-        id={pokemonId.value}
-        backImage={showBackImage.value}
-        isVisible={isPokemonVisible.value}
-      />
+      <Link href={`/pokemon/${pokemonId.value}`}>
+        <PokemonImage
+          id={pokemonId.value}
+          backImage={showBackImage.value}
+          isVisible={isPokemonVisible.value}
+        />
+      </Link>
 
       <div class="flex gap-3 mt-2">
         <button class="btn btn-primary-outlined" onClick$={toggleVisible}>
