@@ -1,4 +1,10 @@
-import { component$, useComputed$ } from '@builder.io/qwik'
+import {
+  $,
+  component$,
+  useComputed$,
+  useSignal,
+  useStore,
+} from '@builder.io/qwik'
 import {
   Link,
   type DocumentHead,
@@ -31,6 +37,22 @@ export default component$(() => {
   const location = useLocation()
   const pokemons = usePokemonList()
 
+  const modalVisible = useSignal(false)
+  const modalPokemon = useStore({
+    id: '',
+    name: '',
+  })
+
+  const showModal = $((id: string, name: string) => {
+    modalPokemon.id = id
+    modalPokemon.name = name
+    modalVisible.value = true
+  })
+
+  const closeModal = $(() => {
+    modalVisible.value = false
+  })
+
   const curretOffset = useComputed$<number>(() => {
     const offsetString = new URLSearchParams(location.url.search)
     return Number(offsetString.get('offset') || OFFSET_MIN)
@@ -59,7 +81,11 @@ export default component$(() => {
       </div>
       <section class={styles.pokemons__grid}>
         {pokemons.value.map((pokemon) => (
-          <div key={pokemon.name} class={styles.pokemons__card}>
+          <div
+            key={pokemon.name}
+            class={styles.pokemons__card}
+            onClick$={() => showModal(pokemon.id, pokemon.name)}
+          >
             <PokemonImage id={pokemon.id} isVisible />
             <span class="capitalize font-semibold text-indigo-500">
               {pokemon.name}
@@ -67,7 +93,12 @@ export default component$(() => {
           </div>
         ))}
       </section>
-      <Modal>
+      <Modal showModal={modalVisible.value} closeFn={closeModal}>
+        <div q:slot="title">{modalPokemon.name}</div>
+        <div class="flex flex-col items-center justify-center" q:slot="content">
+          <PokemonImage id={modalPokemon.id} />
+          <span>Preguntando a ChatGPT</span>
+        </div>
         <p>Hola mundo</p>
       </Modal>
     </article>

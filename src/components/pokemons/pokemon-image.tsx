@@ -26,9 +26,13 @@ export const PokemonImage = component$(
 
     const imgSize = useComputed$(() => `${size}px`)
 
-    const imgPath = useComputed$(() =>
-      backImage ? `/back/${id}.png` : `/${id}.png`
-    )
+    const imgPath = useComputed$(() => {
+      if (!id) return ''
+
+      return backImage
+        ? `${POKEMON_IMG_BASE}/back/${id}.png`
+        : `${POKEMON_IMG_BASE}/${id}.png`
+    })
 
     return (
       <div class="flex flex-col items-center justify-center">
@@ -40,7 +44,7 @@ export const PokemonImage = component$(
           <img
             alt="Pokemon Sprite"
             style={{ height: imgSize.value, with: imgSize.value }}
-            src={`${POKEMON_IMG_BASE}${imgPath.value}`}
+            src={imgPath.value}
             class={[
               {
                 hidden: !imageLoaded.value,
