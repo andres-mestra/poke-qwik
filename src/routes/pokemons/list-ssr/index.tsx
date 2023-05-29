@@ -6,6 +6,7 @@ import {
   useLocation,
 } from '@builder.io/qwik-city'
 import type { PokemonSmall } from '~/interfaces'
+import { Modal } from '~/components/shared'
 import { PokemonImage } from '~/components/pokemons/pokemon-image'
 import { getPokemonsSmall } from '~/helpers/get-pokemos-small'
 import { OFFSET_MIN, OFFSET_PAD } from '~/constants'
@@ -66,6 +67,9 @@ export default component$(() => {
           </div>
         ))}
       </section>
+      <Modal>
+        <p>Hola mundo</p>
+      </Modal>
     </article>
   )
 })
