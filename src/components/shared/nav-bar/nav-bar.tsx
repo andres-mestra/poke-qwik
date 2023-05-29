@@ -7,6 +7,9 @@ export const NavBar = component$(() => {
       <Link class="nav-link" href="/">
         Home
       </Link>
+      <Link class="nav-link" href="/counter">
+        Counter
+      </Link>
       <Link class="nav-link" href="/pokemons/list-ssr">
         SSR-List
       </Link>
