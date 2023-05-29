@@ -1,60 +1,44 @@
-import { $, component$ } from '@builder.io/qwik'
+import { component$ } from '@builder.io/qwik'
 import { type DocumentHead } from '@builder.io/qwik-city'
 import { PokemonImage } from '~/components/pokemons/pokemon-image'
-import { usePokemonGameContext } from '~/hooks/usePokemonGameContext'
-
-import { POKEMON_GRADIENT, POKEMON_ID_MIN } from '~/constants'
+import { usePokemonGame } from '~/hooks/use-pokemon-game'
 
 export default component$(() => {
-  const pokemonGame = usePokemonGameContext()
-
-  const changePokemonId = $((value: number) => {
-    const newId = pokemonGame.pokemonId + value
-    if (newId < POKEMON_ID_MIN) return
-    pokemonGame.pokemonId = newId
-  })
+  const {
+    pokemonId,
+    showBackImage,
+    isPokemonVisible,
+    nextPokemon,
+    prevPokemon,
+    toggleVisible,
+    toggleFromBack,
+  } = usePokemonGame()
 
   return (
     <>
       <h1 class="text-7xl">Poke Qwik</h1>
       <span class="text-2xl">¿Quién es ese pokémon?</span>
-      <span class="text-9xl">{pokemonGame.pokemonId}</span>
+      <span class="text-9xl">{pokemonId.value}</span>
 
       <PokemonImage
-        id={pokemonGame.pokemonId}
-        backImage={pokemonGame.showBackImage}
-        isVisible={pokemonGame.isPokemonVisible}
+        id={pokemonId.value}
+        backImage={showBackImage.value}
+        isVisible={isPokemonVisible.value}
       />
 
       <div class="flex gap-3 mt-2">
-        <button
-          class="btn btn-primary-outlined"
-          onClick$={() =>
-            (pokemonGame.isPokemonVisible = !pokemonGame.isPokemonVisible)
-          }
-        >
-          {pokemonGame.isPokemonVisible ? 'Ocultar' : 'Revelar'}
+        <button class="btn btn-primary-outlined" onClick$={toggleVisible}>
+          {isPokemonVisible.value ? 'Ocultar' : 'Revelar'}
         </button>
-        <button
-          class="btn btn-primary-outlined"
-          onClick$={() =>
-            (pokemonGame.showBackImage = !pokemonGame.showBackImage)
-          }
-        >
+        <button class="btn btn-primary-outlined" onClick$={toggleFromBack}>
           Voltear
         </button>
       </div>
       <div class="flex gap-3 mt-2">
-        <button
-          class="btn btn-primary"
-          onClick$={() => changePokemonId(-POKEMON_GRADIENT)}
-        >
+        <button class="btn btn-primary" onClick$={prevPokemon}>
           Anterior
         </button>
-        <button
-          class="btn btn-primary"
-          onClick$={() => changePokemonId(POKEMON_GRADIENT)}
-        >
+        <button class="btn btn-primary" onClick$={nextPokemon}>
           Siguientes
         </button>
       </div>
